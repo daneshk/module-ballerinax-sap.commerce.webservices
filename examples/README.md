@@ -17,7 +17,9 @@ The `sap.commerce.webservices` connector provides practical examples illustratin
 2. For each example, create a `Config.toml` file the related configuration. Here's an example of how your `Config.toml` file should look:
 
     ```toml
-    token = "<Access Token>"
+    clientId = "<Your Client ID>"
+    clientSecret = "<Your Client Secret>"
+    refreshToken = "<Your Refresh Token>"
     ```
 
 ## Running an Example
