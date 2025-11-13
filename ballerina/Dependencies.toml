@@ -267,9 +267,6 @@ dependencies = [
 	{org = "ballerina", name = "time"},
 	{org = "ballerina", name = "url"}
 ]
-modules = [
-	{org = "ballerina", packageName = "oauth2", moduleName = "oauth2"}
-]
 
 [[package]]
 org = "ballerina"
@@ -367,7 +364,6 @@ dependencies = [
 	{org = "ballerina", name = "data.xmldata"},
 	{org = "ballerina", name = "http"},
 	{org = "ballerina", name = "mime"},
-	{org = "ballerina", name = "oauth2"},
 	{org = "ballerina", name = "os"},
 	{org = "ballerina", name = "test"},
 	{org = "ballerina", name = "url"},
