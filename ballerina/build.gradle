@@ -47,7 +47,7 @@ def stripBallerinaExtensionVersion(String extVersion) {
 ballerina {
     packageOrganization = packageOrg
     module = packageName
-    testCoverageParam = "--code-coverage --coverage-format=xml"
+    testCoverageParam = "--code-coverage --coverage-format=xml --groups mock_tests"
     isConnector = true
     platform = "any"
 }
@@ -94,6 +94,23 @@ publishing {
 clean {
     delete 'build'
 }
+
+// Ensure test task runs before build and build fails on test failures
+tasks.named('test') {
+    doLast {
+        // Check if test results file exists and contains failures
+        def testResultsFile = file("${projectDir}/target/report/test_results.json")
+        if (testResultsFile.exists()) {
+            def testResults = new groovy.json.JsonSlurper().parse(testResultsFile)
+            if (testResults.failed && testResults.failed > 0) {
+                throw new GradleException("${testResults.failed} test(s) failed! See test report at: file://${projectDir}/target/report/index.html")
+            }
+        }
+    }
+}
+
+// Make build depend on test
+build.dependsOn test
 
 build.dependsOn "generatePomFileForMavenPublication"
 publishToMavenLocal.dependsOn build

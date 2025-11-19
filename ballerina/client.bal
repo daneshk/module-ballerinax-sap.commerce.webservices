@@ -41,7 +41,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getBaseSites(map<string|string[]> headers = {}, *GetBaseSitesQueries queries) returns xml|error {
+    remote isolated function getBaseSites(map<string|string[]> headers = {}, *GetBaseSitesQueries queries) returns BaseSiteList|xml|error {
         string resourcePath = string `/basesites`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -64,7 +64,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getBaseStore(string baseSiteId, string baseStoreUid, map<string|string[]> headers = {}, *GetBaseStoreQueries queries) returns xml|error {
+    remote isolated function getBaseStore(string baseSiteId, string baseStoreUid, map<string|string[]> headers = {}, *GetBaseStoreQueries queries) returns BaseStore|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/basestores/${getEncodedUri(baseStoreUid)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -76,7 +76,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCardTypes(string baseSiteId, map<string|string[]> headers = {}, *GetCardTypesQueries queries) returns xml|error {
+    remote isolated function getCardTypes(string baseSiteId, map<string|string[]> headers = {}, *GetCardTypesQueries queries) returns CardTypeList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/cardtypes`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -88,7 +88,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCatalogs(string baseSiteId, map<string|string[]> headers = {}, *GetCatalogsQueries queries) returns xml|error {
+    remote isolated function getCatalogs(string baseSiteId, map<string|string[]> headers = {}, *GetCatalogsQueries queries) returns CatalogList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/catalogs`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -101,7 +101,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCatalog(string baseSiteId, string catalogId, map<string|string[]> headers = {}, *GetCatalogQueries queries) returns xml|error {
+    remote isolated function getCatalog(string baseSiteId, string catalogId, map<string|string[]> headers = {}, *GetCatalogQueries queries) returns Catalog|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/catalogs/${getEncodedUri(catalogId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -115,7 +115,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCatalogVersion(string baseSiteId, string catalogId, string catalogVersionId, map<string|string[]> headers = {}, *GetCatalogVersionQueries queries) returns xml|error {
+    remote isolated function getCatalogVersion(string baseSiteId, string catalogId, string catalogVersionId, map<string|string[]> headers = {}, *GetCatalogVersionQueries queries) returns CatalogVersion|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/catalogs/${getEncodedUri(catalogId)}/${getEncodedUri(catalogVersionId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -130,7 +130,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCategories(string baseSiteId, string catalogId, string catalogVersionId, string categoryId, map<string|string[]> headers = {}, *GetCategoriesQueries queries) returns xml|error {
+    remote isolated function getCategories(string baseSiteId, string catalogId, string catalogVersionId, string categoryId, map<string|string[]> headers = {}, *GetCategoriesQueries queries) returns CategoryHierarchy|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/catalogs/${getEncodedUri(catalogId)}/${getEncodedUri(catalogVersionId)}/categories/${getEncodedUri(categoryId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -143,7 +143,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProductsByCategory(string baseSiteId, string categoryId, map<string|string[]> headers = {}, *GetProductsByCategoryQueries queries) returns xml|error {
+    remote isolated function getProductsByCategory(string baseSiteId, string categoryId, map<string|string[]> headers = {}, *GetProductsByCategoryQueries queries) returns ProductSearchPage|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/categories/${getEncodedUri(categoryId)}/products`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -156,7 +156,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProductConfiguration(string baseSiteId, string configId, map<string|string[]> headers = {}, *GetProductConfigurationQueries queries) returns xml|error {
+    remote isolated function getProductConfiguration(string baseSiteId, string configId, map<string|string[]> headers = {}, *GetProductConfigurationQueries queries) returns CCPConfiguration|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/ccpconfigurator/${getEncodedUri(configId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -170,7 +170,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function updateProductConfiguration(string baseSiteId, string configId, CCPConfiguration payload, map<string|string[]> headers = {}, *UpdateProductConfigurationQueries queries) returns xml|error {
+    remote isolated function updateProductConfiguration(string baseSiteId, string configId, CCPConfiguration payload, map<string|string[]> headers = {}, *UpdateProductConfigurationQueries queries) returns CCPConfiguration|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/ccpconfigurator/${getEncodedUri(configId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -185,7 +185,7 @@ public isolated client class Client {
     # + configId - Configuration identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getProductConfigurationOverview(string baseSiteId, string configId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getProductConfigurationOverview(string baseSiteId, string configId, map<string|string[]> headers = {}) returns CCPConfigurationOverview|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/ccpconfigurator/${getEncodedUri(configId)}/configurationOverview`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -197,7 +197,7 @@ public isolated client class Client {
     # + payload - Request body for updating product configuration overview
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function updateProductConfigurationOverview(string baseSiteId, string configId, CCPConfigurationOverview payload, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function updateProductConfigurationOverview(string baseSiteId, string configId, CCPConfigurationOverview payload, map<string|string[]> headers = {}) returns CCPConfigurationOverview|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/ccpconfigurator/${getEncodedUri(configId)}/configurationOverview`;
         http:Request request = new;
         json jsonBody = jsondata:toJson(payload);
@@ -212,7 +212,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProductConfigurationPricing(string baseSiteId, string configId, map<string|string[]> headers = {}, *GetProductConfigurationPricingQueries queries) returns xml|error {
+    remote isolated function getProductConfigurationPricing(string baseSiteId, string configId, map<string|string[]> headers = {}, *GetProductConfigurationPricingQueries queries) returns CCPConfigurationPricing|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/ccpconfigurator/${getEncodedUri(configId)}/pricing`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -235,7 +235,7 @@ public isolated client class Client {
     # + cityId - City identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getDistricts(string baseSiteId, string cityId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getDistricts(string baseSiteId, string cityId, map<string|string[]> headers = {}) returns DistrictList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/cities/${getEncodedUri(cityId)}/districts`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -249,7 +249,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function getComponentsByIds(string baseSiteId, map<string|string[]> headers = {}, *GetComponentsByIdsQueries queries) returns xml|error {
+    remote isolated function getComponentsByIds(string baseSiteId, map<string|string[]> headers = {}, *GetComponentsByIdsQueries queries) returns ComponentList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/cms/components`;
         map<Encoding> queryParamEncoding = {"componentIds": {style: FORM, explode: true}};
         resourcePath = resourcePath + check getPathForQueryParam(queries, queryParamEncoding);
@@ -266,7 +266,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function searchComponentsByIds(string baseSiteId, ComponentIDList payload, map<string|string[]> headers = {}, *SearchComponentsByIdsQueries queries) returns xml|error {
+    remote isolated function searchComponentsByIds(string baseSiteId, ComponentIDList payload, map<string|string[]> headers = {}, *SearchComponentsByIdsQueries queries) returns ComponentList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/cms/components`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -285,7 +285,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function getComponentById(string baseSiteId, string componentId, map<string|string[]> headers = {}, *GetComponentByIdQueries queries) returns xml|error {
+    remote isolated function getComponentById(string baseSiteId, string componentId, map<string|string[]> headers = {}, *GetComponentByIdQueries queries) returns Component|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/cms/components/${getEncodedUri(componentId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -300,7 +300,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function getPage(string baseSiteId, map<string|string[]> headers = {}, *GetPageQueries queries) returns xml|error {
+    remote isolated function getPage(string baseSiteId, map<string|string[]> headers = {}, *GetPageQueries queries) returns CMSPage|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/cms/pages`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -316,7 +316,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function getPageById(string baseSiteId, string pageId, map<string|string[]> headers = {}, *GetPageByIdQueries queries) returns xml|error {
+    remote isolated function getPageById(string baseSiteId, string pageId, map<string|string[]> headers = {}, *GetPageByIdQueries queries) returns CMSPage|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/cms/pages/${getEncodedUri(pageId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -331,7 +331,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function getAllPages(string baseSiteId, map<string|string[]> headers = {}, *GetAllPagesQueries queries) returns xml|error {
+    remote isolated function getAllPages(string baseSiteId, map<string|string[]> headers = {}, *GetAllPagesQueries queries) returns CMSPageList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/cms/sitepages`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -343,7 +343,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getActiveCostCenters(string baseSiteId, map<string|string[]> headers = {}, *GetActiveCostCentersQueries queries) returns xml|error {
+    remote isolated function getActiveCostCenters(string baseSiteId, map<string|string[]> headers = {}, *GetActiveCostCentersQueries queries) returns B2BCostCenterList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/costcenters`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -372,7 +372,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCostCenter(string baseSiteId, string costCenterCode, map<string|string[]> headers = {}, *GetCostCenterQueries queries) returns xml|error {
+    remote isolated function getCostCenter(string baseSiteId, string costCenterCode, map<string|string[]> headers = {}, *GetCostCenterQueries queries) returns B2BCostCenter|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/costcenters/${getEncodedUri(costCenterCode)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -454,7 +454,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCountries(string baseSiteId, map<string|string[]> headers = {}, *GetCountriesQueries queries) returns xml|error {
+    remote isolated function getCountries(string baseSiteId, map<string|string[]> headers = {}, *GetCountriesQueries queries) returns CountryList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/countries`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -467,7 +467,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCountryRegions(string baseSiteId, string countyIsoCode, map<string|string[]> headers = {}, *GetCountryRegionsQueries queries) returns xml|error {
+    remote isolated function getCountryRegions(string baseSiteId, string countyIsoCode, map<string|string[]> headers = {}, *GetCountryRegionsQueries queries) returns RegionList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/countries/${getEncodedUri(countyIsoCode)}/regions`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -540,7 +540,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCurrencies(string baseSiteId, map<string|string[]> headers = {}, *GetCurrenciesQueries queries) returns xml|error {
+    remote isolated function getCurrencies(string baseSiteId, map<string|string[]> headers = {}, *GetCurrenciesQueries queries) returns CurrencyList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/currencies`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -552,7 +552,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCustomerGroups(string baseSiteId, map<string|string[]> headers = {}, *GetCustomerGroupsQueries queries) returns xml|error {
+    remote isolated function getCustomerGroups(string baseSiteId, map<string|string[]> headers = {}, *GetCustomerGroupsQueries queries) returns UserGroupList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/customergroups`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -580,7 +580,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCustomerGroup(string baseSiteId, string groupId, map<string|string[]> headers = {}, *GetCustomerGroupQueries queries) returns xml|error {
+    remote isolated function getCustomerGroup(string baseSiteId, string groupId, map<string|string[]> headers = {}, *GetCustomerGroupQueries queries) returns UserGroup|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/customergroups/${getEncodedUri(groupId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -639,7 +639,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function getDeliveryCountries(string baseSiteId, map<string|string[]> headers = {}, *GetDeliveryCountriesQueries queries) returns xml|error {
+    remote isolated function getDeliveryCountries(string baseSiteId, map<string|string[]> headers = {}, *GetDeliveryCountriesQueries queries) returns CountryList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/deliverycountries`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -651,7 +651,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getExportedProducts(string baseSiteId, map<string|string[]> headers = {}, *GetExportedProductsQueries queries) returns xml|error {
+    remote isolated function getExportedProducts(string baseSiteId, map<string|string[]> headers = {}, *GetExportedProductsQueries queries) returns ProductList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/export/products`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -663,7 +663,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getOrderStatusFeed(string baseSiteId, map<string|string[]> headers = {}, *GetOrderStatusFeedQueries queries) returns xml|error {
+    remote isolated function getOrderStatusFeed(string baseSiteId, map<string|string[]> headers = {}, *GetOrderStatusFeedQueries queries) returns OrderStatusUpdateElementList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/feeds/orders/statusfeed`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -715,7 +715,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getLanguages(string baseSiteId, map<string|string[]> headers = {}, *GetLanguagesQueries queries) returns xml|error {
+    remote isolated function getLanguages(string baseSiteId, map<string|string[]> headers = {}, *GetLanguagesQueries queries) returns LanguageList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/languages`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -727,7 +727,7 @@ public isolated client class Client {
     # + payload - Request body with conversation message list
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function sendMessage(string baseSiteId, ConversationMessageList payload, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function sendMessage(string baseSiteId, ConversationMessageList payload, map<string|string[]> headers = {}) returns Conversation|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/messagecenter/im/conversations`;
         http:Request request = new;
         json jsonBody = jsondata:toJson(payload);
@@ -741,7 +741,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getConversationsForAgent(string baseSiteId, map<string|string[]> headers = {}, *GetConversationsForAgentQueries queries) returns xml|error {
+    remote isolated function getConversationsForAgent(string baseSiteId, map<string|string[]> headers = {}, *GetConversationsForAgentQueries queries) returns ConversationList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/messagecenter/im/conversations/agentconversations`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -752,7 +752,7 @@ public isolated client class Client {
     # + baseSiteId - Base site identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getConversationsForCustomer(string baseSiteId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getConversationsForCustomer(string baseSiteId, map<string|string[]> headers = {}) returns ConversationList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/messagecenter/im/conversations/customerconversations`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -763,7 +763,7 @@ public isolated client class Client {
     # + conversationId - Conversation identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function closeConversation(string baseSiteId, string conversationId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function closeConversation(string baseSiteId, string conversationId, map<string|string[]> headers = {}) returns Conversation|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/messagecenter/im/conversations/${getEncodedUri(conversationId)}/close`;
         http:Request request = new;
         return self.clientEp->patch(resourcePath, request, headers);
@@ -775,7 +775,7 @@ public isolated client class Client {
     # + conversationId - Conversation identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getMessagesForConversation(string baseSiteId, string conversationId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getMessagesForConversation(string baseSiteId, string conversationId, map<string|string[]> headers = {}) returns ConversationMessageList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/messagecenter/im/conversations/${getEncodedUri(conversationId)}/messages`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -786,7 +786,7 @@ public isolated client class Client {
     # + conversationId - Conversation identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function pickConversation(string baseSiteId, string conversationId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function pickConversation(string baseSiteId, string conversationId, map<string|string[]> headers = {}) returns Conversation|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/messagecenter/im/conversations/${getEncodedUri(conversationId)}/pick`;
         http:Request request = new;
         return self.clientEp->patch(resourcePath, request, headers);
@@ -810,7 +810,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function retrieveAllOrderForms(string baseSiteId, map<string|string[]> headers = {}, *RetrieveAllOrderFormsQueries queries) returns xml|error {
+    remote isolated function retrieveAllOrderForms(string baseSiteId, map<string|string[]> headers = {}, *RetrieveAllOrderFormsQueries queries) returns OrderFormList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orderforms`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -838,7 +838,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function retrieveAnOrderForm(string baseSiteId, string orderFormCode, map<string|string[]> headers = {}, *RetrieveAnOrderFormQueries queries) returns xml|error {
+    remote isolated function retrieveAnOrderForm(string baseSiteId, string orderFormCode, map<string|string[]> headers = {}, *RetrieveAnOrderFormQueries queries) returns OrderForm|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orderforms/${getEncodedUri(orderFormCode)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -852,7 +852,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function updateAnOrderForm(string baseSiteId, string orderFormCode, OrderForm payload, map<string|string[]> headers = {}, *UpdateAnOrderFormQueries queries) returns xml|error {
+    remote isolated function updateAnOrderForm(string baseSiteId, string orderFormCode, OrderForm payload, map<string|string[]> headers = {}, *UpdateAnOrderFormQueries queries) returns OrderForm|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orderforms/${getEncodedUri(orderFormCode)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -893,7 +893,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getOrder(string baseSiteId, string code, map<string|string[]> headers = {}, *GetOrderQueries queries) returns xml|error {
+    remote isolated function getOrder(string baseSiteId, string code, map<string|string[]> headers = {}, *GetOrderQueries queries) returns Order|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orders/${getEncodedUri(code)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -906,7 +906,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getOrgProduct(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetOrgProductQueries queries) returns xml|error {
+    remote isolated function getOrgProduct(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetOrgProductQueries queries) returns Product|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgProducts/${getEncodedUri(productCode)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -936,7 +936,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getOrgUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetOrgUserQueries queries) returns xml|error {
+    remote isolated function getOrgUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetOrgUserQueries queries) returns User|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgUsers/${getEncodedUri(userId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -949,7 +949,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function createCartFromOrder(string baseSiteId, string userId, map<string|string[]> headers = {}, *CreateCartFromOrderQueries queries) returns xml|error {
+    remote isolated function createCartFromOrder(string baseSiteId, string userId, map<string|string[]> headers = {}, *CreateCartFromOrderQueries queries) returns CartModificationList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgUsers/${getEncodedUri(userId)}/cartFromOrder`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -964,7 +964,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function replaceOrgCartDeliveryAddress(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *ReplaceOrgCartDeliveryAddressQueries queries) returns xml|error {
+    remote isolated function replaceOrgCartDeliveryAddress(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *ReplaceOrgCartDeliveryAddressQueries queries) returns Cart|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgUsers/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/addresses/delivery`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -980,7 +980,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function replaceOrgCartEntries(string baseSiteId, string cartId, string userId, OrderEntryList payload, map<string|string[]> headers = {}, *ReplaceOrgCartEntriesQueries queries) returns xml|error {
+    remote isolated function replaceOrgCartEntries(string baseSiteId, string cartId, string userId, OrderEntryList payload, map<string|string[]> headers = {}, *ReplaceOrgCartEntriesQueries queries) returns CartModificationList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgUsers/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -998,7 +998,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function doAddOrgCartEntries(string baseSiteId, string cartId, string userId, OrderEntryList payload, map<string|string[]> headers = {}, *DoAddOrgCartEntriesQueries queries) returns xml|error {
+    remote isolated function doAddOrgCartEntries(string baseSiteId, string cartId, string userId, OrderEntryList payload, map<string|string[]> headers = {}, *DoAddOrgCartEntriesQueries queries) returns CartModificationList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgUsers/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -1014,7 +1014,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function placeOrgOrder(string baseSiteId, string userId, map<string|string[]> headers = {}, *PlaceOrgOrderQueries queries) returns xml|error {
+    remote isolated function placeOrgOrder(string baseSiteId, string userId, map<string|string[]> headers = {}, *PlaceOrgOrderQueries queries) returns Order|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgUsers/${getEncodedUri(userId)}/orders`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -1028,7 +1028,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getUserBranchOrderHistory(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetUserBranchOrderHistoryQueries queries) returns xml|error {
+    remote isolated function getUserBranchOrderHistory(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetUserBranchOrderHistoryQueries queries) returns OrderHistoryList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgUsers/${getEncodedUri(userId)}/orgUnits/orders`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1042,7 +1042,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getBranchOrder(string baseSiteId, string code, string userId, map<string|string[]> headers = {}, *GetBranchOrderQueries queries) returns xml|error {
+    remote isolated function getBranchOrder(string baseSiteId, string code, string userId, map<string|string[]> headers = {}, *GetBranchOrderQueries queries) returns Order|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/orgUsers/${getEncodedUri(userId)}/orgUnits/orders/${getEncodedUri(code)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1085,7 +1085,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getPaymentModes(string baseSiteId, map<string|string[]> headers = {}, *GetPaymentModesQueries queries) returns xml|error {
+    remote isolated function getPaymentModes(string baseSiteId, map<string|string[]> headers = {}, *GetPaymentModesQueries queries) returns PaymentModeList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/paymentmodes`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1097,7 +1097,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getPaymentTypes(string baseSiteId, map<string|string[]> headers = {}, *GetPaymentTypesQueries queries) returns xml|error {
+    remote isolated function getPaymentTypes(string baseSiteId, map<string|string[]> headers = {}, *GetPaymentTypesQueries queries) returns B2BPaymentTypeList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/paymenttypes`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1109,7 +1109,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProductAvailability(string baseSiteId, map<string|string[]> headers = {}, *GetProductAvailabilityQueries queries) returns SAPAvailability|error {
+    remote isolated function getProductAvailability(string baseSiteId, map<string|string[]> headers = {}, *GetProductAvailabilityQueries queries) returns SAPAvailability|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/productAvailabilities`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1121,7 +1121,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getExpressUpdateProducts(string baseSiteId, map<string|string[]> headers = {}, *GetExpressUpdateProductsQueries queries) returns xml|error {
+    remote isolated function getExpressUpdateProducts(string baseSiteId, map<string|string[]> headers = {}, *GetExpressUpdateProductsQueries queries) returns ProductExpressUpdateElementList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/expressupdate`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1133,7 +1133,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProducts(string baseSiteId, map<string|string[]> headers = {}, *GetProductsQueries queries) returns xml|error {
+    remote isolated function getProducts(string baseSiteId, map<string|string[]> headers = {}, *GetProductsQueries queries) returns ProductSearchPage|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/search`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1157,7 +1157,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getSuggestions(string baseSiteId, map<string|string[]> headers = {}, *GetSuggestionsQueries queries) returns xml|error {
+    remote isolated function getSuggestions(string baseSiteId, map<string|string[]> headers = {}, *GetSuggestionsQueries queries) returns SuggestionList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/suggestions`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1170,7 +1170,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProduct(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetProductQueries queries) returns xml|error {
+    remote isolated function getProduct(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetProductQueries queries) returns Product|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/${getEncodedUri(productCode)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1182,7 +1182,7 @@ public isolated client class Client {
     # + productCode - Product identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getConfigurationByProductCode(string baseSiteId, string productCode, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getConfigurationByProductCode(string baseSiteId, string productCode, map<string|string[]> headers = {}) returns ConfigurationInfoList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/${getEncodedUri(productCode)}/configurator/textfield`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -1194,7 +1194,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getDefaultProductConfiguration(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetDefaultProductConfigurationQueries queries) returns xml|error {
+    remote isolated function getDefaultProductConfiguration(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetDefaultProductConfigurationQueries queries) returns CCPConfiguration|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/${getEncodedUri(productCode)}/configurators/ccpconfigurator`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1218,7 +1218,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProductReferences(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetProductReferencesQueries queries) returns xml|error {
+    remote isolated function getProductReferences(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetProductReferencesQueries queries) returns ProductReferenceList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/${getEncodedUri(productCode)}/references`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1231,7 +1231,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProductReviews(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetProductReviewsQueries queries) returns xml|error {
+    remote isolated function getProductReviews(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetProductReviewsQueries queries) returns ReviewList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/${getEncodedUri(productCode)}/reviews`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1245,7 +1245,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function createProductReview(string baseSiteId, string productCode, Review payload, map<string|string[]> headers = {}, *CreateProductReviewQueries queries) returns xml|error {
+    remote isolated function createProductReview(string baseSiteId, string productCode, Review payload, map<string|string[]> headers = {}, *CreateProductReviewQueries queries) returns Review|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/${getEncodedUri(productCode)}/reviews`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -1262,7 +1262,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getLocationProductStock(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetLocationProductStockQueries queries) returns xml|error {
+    remote isolated function getLocationProductStock(string baseSiteId, string productCode, map<string|string[]> headers = {}, *GetLocationProductStockQueries queries) returns StoreFinderStockSearchPage|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/${getEncodedUri(productCode)}/stock`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1289,7 +1289,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getStoreProductStock(string baseSiteId, string productCode, string storeName, map<string|string[]> headers = {}, *GetStoreProductStockQueries queries) returns xml|error {
+    remote isolated function getStoreProductStock(string baseSiteId, string productCode, string storeName, map<string|string[]> headers = {}, *GetStoreProductStockQueries queries) returns Stock|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/products/${getEncodedUri(productCode)}/stock/${getEncodedUri(storeName)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1301,7 +1301,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getPromotions(string baseSiteId, map<string|string[]> headers = {}, *GetPromotionsQueries queries) returns xml|error {
+    remote isolated function getPromotions(string baseSiteId, map<string|string[]> headers = {}, *GetPromotionsQueries queries) returns PromotionList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/promotions`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1314,7 +1314,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getPromotion(string baseSiteId, string code, map<string|string[]> headers = {}, *GetPromotionQueries queries) returns xml|error {
+    remote isolated function getPromotion(string baseSiteId, string code, map<string|string[]> headers = {}, *GetPromotionQueries queries) returns Promotion|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/promotions/${getEncodedUri(code)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1398,7 +1398,7 @@ public isolated client class Client {
     # + regionId - Region identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getCities(string baseSiteId, string regionId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getCities(string baseSiteId, string regionId, map<string|string[]> headers = {}) returns CityList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/regions/${getEncodedUri(regionId)}/cities`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -1424,7 +1424,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getStoreLocations(string baseSiteId, map<string|string[]> headers = {}, *GetStoreLocationsQueries queries) returns xml|error {
+    remote isolated function getStoreLocations(string baseSiteId, map<string|string[]> headers = {}, *GetStoreLocationsQueries queries) returns StoreFinderSearchPage|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/stores`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1449,7 +1449,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getStoresByCountry(string baseSiteId, string countryIso, map<string|string[]> headers = {}, *GetStoresByCountryQueries queries) returns xml|error {
+    remote isolated function getStoresByCountry(string baseSiteId, string countryIso, map<string|string[]> headers = {}, *GetStoresByCountryQueries queries) returns PointOfServiceList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/stores/country/${getEncodedUri(countryIso)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1463,7 +1463,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getStoresByCountryAndRegion(string baseSiteId, string countryIso, string regionIso, map<string|string[]> headers = {}, *GetStoresByCountryAndRegionQueries queries) returns xml|error {
+    remote isolated function getStoresByCountryAndRegion(string baseSiteId, string countryIso, string regionIso, map<string|string[]> headers = {}, *GetStoresByCountryAndRegionQueries queries) returns PointOfServiceList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/stores/country/${getEncodedUri(countryIso)}/region/${getEncodedUri(regionIso)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1474,7 +1474,7 @@ public isolated client class Client {
     # + baseSiteId - Base site identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getLocationCounts(string baseSiteId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getLocationCounts(string baseSiteId, map<string|string[]> headers = {}) returns StoreCountList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/stores/storescounts`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -1486,7 +1486,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getStoreLocation(string baseSiteId, string storeId, map<string|string[]> headers = {}, *GetStoreLocationQueries queries) returns xml|error {
+    remote isolated function getStoreLocation(string baseSiteId, string storeId, map<string|string[]> headers = {}, *GetStoreLocationQueries queries) returns PointOfService|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/stores/${getEncodedUri(storeId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1510,7 +1510,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getTitles(string baseSiteId, map<string|string[]> headers = {}, *GetTitlesQueries queries) returns xml|error {
+    remote isolated function getTitles(string baseSiteId, map<string|string[]> headers = {}, *GetTitlesQueries queries) returns TitleList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/titles`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1523,7 +1523,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function createUser(string baseSiteId, UserSignUp payload, CreateUserHeaders headers = {}, *CreateUserQueries queries) returns xml|error {
+    remote isolated function createUser(string baseSiteId, UserSignUp payload, CreateUserHeaders headers = {}, *CreateUserQueries queries) returns User|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         map<string|string[]> httpHeaders = http:getHeaderMap(headers);
@@ -1541,7 +1541,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetUserQueries queries) returns xml|error {
+    remote isolated function getUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetUserQueries queries) returns User|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1596,7 +1596,7 @@ public isolated client class Client {
     # + userId - User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getAccessToConfigurationEngine(string baseSiteId, string userId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getAccessToConfigurationEngine(string baseSiteId, string userId, map<string|string[]> headers = {}) returns CPQConfigurationEngineAccess|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/access/cpqconfigurator`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -1608,7 +1608,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - List of customer's addresses 
-    remote isolated function getAddresses(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetAddressesQueries queries) returns xml|error {
+    remote isolated function getAddresses(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetAddressesQueries queries) returns AddressList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/addresses`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1622,7 +1622,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function createAddress(string baseSiteId, string userId, Address payload, map<string|string[]> headers = {}, *CreateAddressQueries queries) returns xml|error {
+    remote isolated function createAddress(string baseSiteId, string userId, Address payload, map<string|string[]> headers = {}, *CreateAddressQueries queries) returns Address|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/addresses`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -1640,7 +1640,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function validateAddress(string baseSiteId, string userId, Address payload, map<string|string[]> headers = {}, *ValidateAddressQueries queries) returns xml|error {
+    remote isolated function validateAddress(string baseSiteId, string userId, Address payload, map<string|string[]> headers = {}, *ValidateAddressQueries queries) returns AddressValidation|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/addresses/verification`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -1658,7 +1658,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getAddress(string addressId, string baseSiteId, string userId, map<string|string[]> headers = {}, *GetAddressQueries queries) returns xml|error {
+    remote isolated function getAddress(string addressId, string baseSiteId, string userId, map<string|string[]> headers = {}, *GetAddressQueries queries) returns Address|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/addresses/${getEncodedUri(addressId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1792,7 +1792,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCarts(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetCartsQueries queries) returns xml|error {
+    remote isolated function getCarts(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetCartsQueries queries) returns CartList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1805,7 +1805,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function createCart(string baseSiteId, string userId, map<string|string[]> headers = {}, *CreateCartQueries queries) returns xml|error {
+    remote isolated function createCart(string baseSiteId, string userId, map<string|string[]> headers = {}, *CreateCartQueries queries) returns Cart|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -1819,7 +1819,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCurrentOrgCart(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetCurrentOrgCartQueries queries) returns xml|error {
+    remote isolated function getCurrentOrgCart(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetCurrentOrgCartQueries queries) returns Cart|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/current`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1833,7 +1833,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartQueries queries) returns xml|error {
+    remote isolated function getCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartQueries queries) returns Cart|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1904,7 +1904,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function createCartDeliveryAddress(string baseSiteId, string cartId, string userId, Address payload, map<string|string[]> headers = {}, *CreateCartDeliveryAddressQueries queries) returns xml|error {
+    remote isolated function createCartDeliveryAddress(string baseSiteId, string cartId, string userId, Address payload, map<string|string[]> headers = {}, *CreateCartDeliveryAddressQueries queries) returns Address|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/addresses/delivery`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -1969,7 +1969,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function doCartClone(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoCartCloneQueries queries) returns xml|error {
+    remote isolated function doCartClone(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoCartCloneQueries queries) returns SaveCartResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/clonesavedcart`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -1984,7 +1984,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getConsolidatedPickupLocations(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetConsolidatedPickupLocationsQueries queries) returns xml|error {
+    remote isolated function getConsolidatedPickupLocations(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetConsolidatedPickupLocationsQueries queries) returns PointOfServiceList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/consolidate`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -1998,7 +1998,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function createConsolidatedPickupLocation(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *CreateConsolidatedPickupLocationQueries queries) returns xml|error {
+    remote isolated function createConsolidatedPickupLocation(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *CreateConsolidatedPickupLocationQueries queries) returns CartModificationList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/consolidate`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2014,7 +2014,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK
-    remote isolated function copySavedCart(string baseSiteId, string cartId, string userId, SAPSavedCartRequest payload, map<string|string[]> headers = {}, *CopySavedCartQueries queries) returns xml|error {
+    remote isolated function copySavedCart(string baseSiteId, string cartId, string userId, SAPSavedCartRequest payload, map<string|string[]> headers = {}, *CopySavedCartQueries queries) returns SaveCartResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/copySavedCart`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2031,7 +2031,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function replaceOrgCartCostCenter(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *ReplaceOrgCartCostCenterQueries queries) returns xml|error {
+    remote isolated function replaceOrgCartCostCenter(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *ReplaceOrgCartCostCenterQueries queries) returns Cart|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/costcenter`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2046,7 +2046,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCartDeliveryMode(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartDeliveryModeQueries queries) returns xml|error {
+    remote isolated function getCartDeliveryMode(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartDeliveryModeQueries queries) returns DeliveryMode|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/deliverymode`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2087,7 +2087,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCartDeliveryModes(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartDeliveryModesQueries queries) returns xml|error {
+    remote isolated function getCartDeliveryModes(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartDeliveryModesQueries queries) returns DeliveryModeList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/deliverymodes`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2119,7 +2119,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCartEntries(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartEntriesQueries queries) returns xml|error {
+    remote isolated function getCartEntries(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartEntriesQueries queries) returns OrderEntryList|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2134,7 +2134,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function createCartEntry(string baseSiteId, string cartId, string userId, OrderEntry payload, map<string|string[]> headers = {}, *CreateCartEntryQueries queries) returns xml|error {
+    remote isolated function createCartEntry(string baseSiteId, string cartId, string userId, OrderEntry payload, map<string|string[]> headers = {}, *CreateCartEntryQueries queries) returns CartModification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2152,7 +2152,7 @@ public isolated client class Client {
     # + payload - Request body with CCP order entry
     # + headers - Headers to be sent with the request 
     # + return - Created 
-    remote isolated function createCartEntryConfiguration(string baseSiteId, string cartId, string userId, CCPOrderEntry payload, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function createCartEntryConfiguration(string baseSiteId, string cartId, string userId, CCPOrderEntry payload, map<string|string[]> headers = {}) returns CartModification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/ccpconfigurator`;
         http:Request request = new;
         json jsonBody = jsondata:toJson(payload);
@@ -2169,7 +2169,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK
-    remote isolated function addCartEntry(string baseSiteId, string cartId, string userId, OrderEntry payload, map<string|string[]> headers = {}, *AddCartEntryQueries queries) returns xml|error {
+    remote isolated function addCartEntry(string baseSiteId, string cartId, string userId, OrderEntry payload, map<string|string[]> headers = {}, *AddCartEntryQueries queries) returns CartModification|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/configurator/textfield`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2187,7 +2187,7 @@ public isolated client class Client {
     # + payload - Request body with CPQ order entry
     # + headers - Headers to be sent with the request 
     # + return - Created 
-    remote isolated function createCartEntryCPQConfiguration(string baseSiteId, string cartId, string userId, CPQOrderEntry payload, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function createCartEntryCPQConfiguration(string baseSiteId, string cartId, string userId, CPQOrderEntry payload, map<string|string[]> headers = {}) returns CartModification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/cpqconfigurator`;
         http:Request request = new;
         json jsonBody = jsondata:toJson(payload);
@@ -2204,7 +2204,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCartEntry(string baseSiteId, string cartId, int entryNumber, string userId, map<string|string[]> headers = {}, *GetCartEntryQueries queries) returns xml|error {
+    remote isolated function getCartEntry(string baseSiteId, string cartId, int entryNumber, string userId, map<string|string[]> headers = {}, *GetCartEntryQueries queries) returns OrderEntry|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2220,7 +2220,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK
-    remote isolated function replaceCartEntry(string baseSiteId, string cartId, int entryNumber, string userId, OrderEntry payload, map<string|string[]> headers = {}, *ReplaceCartEntryQueries queries) returns xml|error {
+    remote isolated function replaceCartEntry(string baseSiteId, string cartId, int entryNumber, string userId, OrderEntry payload, map<string|string[]> headers = {}, *ReplaceCartEntryQueries queries) returns CartModification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2253,7 +2253,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK
-    remote isolated function updateCartEntry(string baseSiteId, string cartId, int entryNumber, string userId, OrderEntry payload, map<string|string[]> headers = {}, *UpdateCartEntryQueries queries) returns xml|error {
+    remote isolated function updateCartEntry(string baseSiteId, string cartId, int entryNumber, string userId, OrderEntry payload, map<string|string[]> headers = {}, *UpdateCartEntryQueries queries) returns CartModification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2272,7 +2272,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCartEntryConfiguration(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, map<string|string[]> headers = {}, *GetCartEntryConfigurationQueries queries) returns xml|error {
+    remote isolated function getCartEntryConfiguration(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, map<string|string[]> headers = {}, *GetCartEntryConfigurationQueries queries) returns CCPConfiguration|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}/ccpconfigurator`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2287,7 +2287,7 @@ public isolated client class Client {
     # + payload - Request body with CCP order entry
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function replaceCartEntryConfiguration(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, CCPOrderEntry payload, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function replaceCartEntryConfiguration(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, CCPOrderEntry payload, map<string|string[]> headers = {}) returns CartModification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}/ccpconfigurator`;
         http:Request request = new;
         json jsonBody = jsondata:toJson(payload);
@@ -2303,7 +2303,7 @@ public isolated client class Client {
     # + userId - User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getConfigurationOverviewForSavedCart(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getConfigurationOverviewForSavedCart(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, map<string|string[]> headers = {}) returns CCPConfigurationOverview|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}/ccpconfigurator/configurationOverview`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -2316,7 +2316,7 @@ public isolated client class Client {
     # + userId - User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getConfigurationInEntry(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getConfigurationInEntry(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, map<string|string[]> headers = {}) returns ConfigurationInfoList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}/configurator/textfield`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -2347,7 +2347,7 @@ public isolated client class Client {
     # + payload - Request body with CPQ order entry
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function replaceCartEntryCPQConfiguration(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, CPQOrderEntry payload, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function replaceCartEntryCPQConfiguration(string baseSiteId, string cartId, int:Signed32 entryNumber, string userId, CPQOrderEntry payload, map<string|string[]> headers = {}) returns CartModification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}/cpqconfigurator`;
         http:Request request = new;
         json jsonBody = jsondata:toJson(payload);
@@ -2378,7 +2378,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function addToCartEntryGroup(string baseSiteId, string cartId, int:Signed32 entryGroupNumber, string userId, OrderEntry payload, map<string|string[]> headers = {}, *AddToCartEntryGroupQueries queries) returns xml|error {
+    remote isolated function addToCartEntryGroup(string baseSiteId, string cartId, int:Signed32 entryGroupNumber, string userId, OrderEntry payload, map<string|string[]> headers = {}, *AddToCartEntryGroupQueries queries) returns CartModification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entrygroups/${getEncodedUri(entryGroupNumber)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2409,7 +2409,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getAvailableProducts(string baseSiteId, string cartId, int:Signed32 entryGroupNumber, string userId, map<string|string[]> headers = {}, *GetAvailableProductsQueries queries) returns xml|error {
+    remote isolated function getAvailableProducts(string baseSiteId, string cartId, int:Signed32 entryGroupNumber, string userId, map<string|string[]> headers = {}, *GetAvailableProductsQueries queries) returns ProductSearchPage|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/entrygroups/${getEncodedUri(entryGroupNumber)}/allowedProductsSearch`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2423,7 +2423,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function doUpdateFlagForDeletion(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoUpdateFlagForDeletionQueries queries) returns xml|error {
+    remote isolated function doUpdateFlagForDeletion(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoUpdateFlagForDeletionQueries queries) returns SaveCartResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/flagForDeletion`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2474,7 +2474,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function createDigitalPaymentRequest(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *CreateDigitalPaymentRequestQueries queries) returns xml|error {
+    remote isolated function createDigitalPaymentRequest(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *CreateDigitalPaymentRequestQueries queries) returns PaymentRequest|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/payment/digitalPayments/request`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2489,7 +2489,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function doHandleDigitalPaymentResponse(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoHandleDigitalPaymentResponseQueries queries) returns xml|error {
+    remote isolated function doHandleDigitalPaymentResponse(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoHandleDigitalPaymentResponseQueries queries) returns PaymentDetails|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/payment/digitalPayments/response`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2504,7 +2504,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getSopPaymentRequestDetails(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetSopPaymentRequestDetailsQueries queries) returns xml|error {
+    remote isolated function getSopPaymentRequestDetails(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetSopPaymentRequestDetailsQueries queries) returns PaymentRequest|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/payment/sop/request`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2518,7 +2518,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getSopPaymentResponse(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetSopPaymentResponseQueries queries) returns xml|error {
+    remote isolated function getSopPaymentResponse(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetSopPaymentResponseQueries queries) returns PaymentDetails|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/payment/sop/response`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2532,7 +2532,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function doHandleSopPaymentResponse(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoHandleSopPaymentResponseQueries queries) returns xml|error {
+    remote isolated function doHandleSopPaymentResponse(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoHandleSopPaymentResponseQueries queries) returns PaymentDetails|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/payment/sop/response`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2560,7 +2560,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function updateSapPaymentOption(string baseSiteId, string cartId, string userId, SAPPaymentOptionRequest payload, map<string|string[]> headers = {}, *UpdateSapPaymentOptionQueries queries) returns xml|error {
+    remote isolated function updateSapPaymentOption(string baseSiteId, string cartId, string userId, SAPPaymentOptionRequest payload, map<string|string[]> headers = {}, *UpdateSapPaymentOptionQueries queries) returns Cart|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/paymentOption`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2593,7 +2593,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function createCartPaymentDetails(string baseSiteId, string cartId, string userId, PaymentDetails payload, map<string|string[]> headers = {}, *CreateCartPaymentDetailsQueries queries) returns xml|error {
+    remote isolated function createCartPaymentDetails(string baseSiteId, string cartId, string userId, PaymentDetails payload, map<string|string[]> headers = {}, *CreateCartPaymentDetailsQueries queries) returns PaymentDetails|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/paymentdetails`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2611,7 +2611,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function replaceOrgCartPaymentType(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *ReplaceOrgCartPaymentTypeQueries queries) returns xml|error {
+    remote isolated function replaceOrgCartPaymentType(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *ReplaceOrgCartPaymentTypeQueries queries) returns Cart|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/paymenttype`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2626,7 +2626,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCartPromotions(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartPromotionsQueries queries) returns xml|error {
+    remote isolated function getCartPromotions(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartPromotionsQueries queries) returns PromotionResultList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/promotions`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2656,7 +2656,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCartPromotion(string baseSiteId, string cartId, string promotionId, string userId, map<string|string[]> headers = {}, *GetCartPromotionQueries queries) returns xml|error {
+    remote isolated function getCartPromotion(string baseSiteId, string cartId, string promotionId, string userId, map<string|string[]> headers = {}, *GetCartPromotionQueries queries) returns PromotionResultList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/promotions/${getEncodedUri(promotionId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2714,7 +2714,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function doUpdateSavedCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoUpdateSavedCartQueries queries) returns xml|error {
+    remote isolated function doUpdateSavedCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoUpdateSavedCartQueries queries) returns SaveCartResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/restoresavedcart`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2732,7 +2732,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function doSaveCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoSaveCartQueries queries) returns xml|error {
+    remote isolated function doSaveCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *DoSaveCartQueries queries) returns SaveCartResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/save`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2748,7 +2748,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function doCartSave(string baseSiteId, string cartId, string userId, SAPSavedCartRequest payload, map<string|string[]> headers = {}, *DoCartSaveQueries queries) returns xml|error {
+    remote isolated function doCartSave(string baseSiteId, string cartId, string userId, SAPSavedCartRequest payload, map<string|string[]> headers = {}, *DoCartSaveQueries queries) returns SaveCartResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/savedCart`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2765,7 +2765,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getSavedCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetSavedCartQueries queries) returns xml|error {
+    remote isolated function getSavedCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetSavedCartQueries queries) returns SaveCartResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/savedcart`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2811,7 +2811,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function validateCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *ValidateCartQueries queries) returns xml|error {
+    remote isolated function validateCart(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *ValidateCartQueries queries) returns CartModificationList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/validate`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2826,7 +2826,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCartVouchers(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartVouchersQueries queries) returns xml|error {
+    remote isolated function getCartVouchers(string baseSiteId, string cartId, string userId, map<string|string[]> headers = {}, *GetCartVouchersQueries queries) returns VoucherList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/carts/${getEncodedUri(cartId)}/vouchers`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2873,7 +2873,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - ComponentIDListWsDTO 
-    remote isolated function getComponentsByIdsAndUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetComponentsByIdsAndUserQueries queries) returns xml|error {
+    remote isolated function getComponentsByIdsAndUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetComponentsByIdsAndUserQueries queries) returns ComponentList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/cms/components`;
         map<Encoding> queryParamEncoding = {"componentIds": {style: FORM, explode: true}};
         resourcePath = resourcePath + check getPathForQueryParam(queries, queryParamEncoding);
@@ -2888,7 +2888,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - ComponentWsDTO 
-    remote isolated function getComponentByIdAndUser(string baseSiteId, string componentId, string userId, map<string|string[]> headers = {}, *GetComponentByIdAndUserQueries queries) returns xml|error {
+    remote isolated function getComponentByIdAndUser(string baseSiteId, string componentId, string userId, map<string|string[]> headers = {}, *GetComponentByIdAndUserQueries queries) returns Component|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/cms/components/${getEncodedUri(componentId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2901,7 +2901,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - CMSPageWsDTO 
-    remote isolated function getPageWithUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetPageWithUserQueries queries) returns xml|error {
+    remote isolated function getPageWithUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetPageWithUserQueries queries) returns CMSPage|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/cms/pages`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2915,7 +2915,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - CMSPageWsDTO 
-    remote isolated function getPageByIdAndUser(string baseSiteId, string pageId, string userId, map<string|string[]> headers = {}, *GetPageByIdAndUserQueries queries) returns xml|error {
+    remote isolated function getPageByIdAndUser(string baseSiteId, string pageId, string userId, map<string|string[]> headers = {}, *GetPageByIdAndUserQueries queries) returns CMSPage|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/cms/pages/${getEncodedUri(pageId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2928,7 +2928,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - CMSPageListWsDTO 
-    remote isolated function getAllPagesWithUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetAllPagesWithUserQueries queries) returns xml|error {
+    remote isolated function getAllPagesWithUser(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetAllPagesWithUserQueries queries) returns CMSPageList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/cms/sitepages`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2941,7 +2941,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function doGiveConsent(string baseSiteId, string userId, map<string|string[]> headers = {}, *DoGiveConsentQueries queries) returns xml|error {
+    remote isolated function doGiveConsent(string baseSiteId, string userId, map<string|string[]> headers = {}, *DoGiveConsentQueries queries) returns ConsentTemplate|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/consents`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -2967,7 +2967,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getConsentTemplates(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetConsentTemplatesQueries queries) returns xml|error {
+    remote isolated function getConsentTemplates(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetConsentTemplatesQueries queries) returns ConsentTemplateList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/consenttemplates`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2981,7 +2981,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getConsentTemplate(string baseSiteId, string consentTemplateId, string userId, map<string|string[]> headers = {}, *GetConsentTemplateQueries queries) returns xml|error {
+    remote isolated function getConsentTemplate(string baseSiteId, string consentTemplateId, string userId, map<string|string[]> headers = {}, *GetConsentTemplateQueries queries) returns ConsentTemplate|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/consenttemplates/${getEncodedUri(consentTemplateId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -2994,7 +2994,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getCustomerCoupons(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetCustomerCouponsQueries queries) returns xml|error {
+    remote isolated function getCustomerCoupons(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetCustomerCouponsQueries queries) returns CustomerCouponSearchResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/customercoupons`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -3008,7 +3008,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function claimCustomerCoupon(string baseSiteId, string userId, SAPCustomerCouponOperationRequest payload, map<string|string[]> headers = {}, *ClaimCustomerCouponQueries queries) returns xml|error {
+    remote isolated function claimCustomerCoupon(string baseSiteId, string userId, SAPCustomerCouponOperationRequest payload, map<string|string[]> headers = {}, *ClaimCustomerCouponQueries queries) returns CustomerCoupon2Customer|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/customercoupons/claim`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -3040,7 +3040,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function subscribeNotificationsOfCustomerCoupon(string baseSiteId, string userId, SAPCustomerCouponOperationRequest payload, map<string|string[]> headers = {}, *SubscribeNotificationsOfCustomerCouponQueries queries) returns xml|error {
+    remote isolated function subscribeNotificationsOfCustomerCoupon(string baseSiteId, string userId, SAPCustomerCouponOperationRequest payload, map<string|string[]> headers = {}, *SubscribeNotificationsOfCustomerCouponQueries queries) returns CustomerCouponNotification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/customercoupons/subscribeNotifications`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -3075,7 +3075,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function doClaimCustomerCoupon(string baseSiteId, string couponCode, string userId, map<string|string[]> headers = {}, *DoClaimCustomerCouponQueries queries) returns xml|error {
+    remote isolated function doClaimCustomerCoupon(string baseSiteId, string couponCode, string userId, map<string|string[]> headers = {}, *DoClaimCustomerCouponQueries queries) returns CustomerCoupon2Customer|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/customercoupons/${getEncodedUri(couponCode)}/claim`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -3108,7 +3108,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function doSubscribeToCustomerCoupon(string baseSiteId, string couponCode, string userId, map<string|string[]> headers = {}, *DoSubscribeToCustomerCouponQueries queries) returns xml|error {
+    remote isolated function doSubscribeToCustomerCoupon(string baseSiteId, string couponCode, string userId, map<string|string[]> headers = {}, *DoSubscribeToCustomerCouponQueries queries) returns CustomerCouponNotification|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/customercoupons/${getEncodedUri(couponCode)}/notification`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -3137,7 +3137,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getUserCustomerGroups(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetUserCustomerGroupsQueries queries) returns xml|error {
+    remote isolated function getUserCustomerGroups(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetUserCustomerGroupsQueries queries) returns UserGroupList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/customergroups`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -3247,7 +3247,7 @@ public isolated client class Client {
     # + userId - User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getNotificationPreferences(string baseSiteId, string userId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getNotificationPreferences(string baseSiteId, string userId, map<string|string[]> headers = {}) returns NotificationPreferenceList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/notificationpreferences`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -3275,7 +3275,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function siteMessages(string baseSiteId, string userId, map<string|string[]> headers = {}, *SiteMessagesQueries queries) returns xml|error {
+    remote isolated function siteMessages(string baseSiteId, string userId, map<string|string[]> headers = {}, *SiteMessagesQueries queries) returns SiteMessageSearchResult|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/notifications/sitemessages`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -3455,7 +3455,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getUserOrderHistory(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetUserOrderHistoryQueries queries) returns xml|error {
+    remote isolated function getUserOrderHistory(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetUserOrderHistoryQueries queries) returns OrderHistoryList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orders`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -3468,7 +3468,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function placeOrder(string baseSiteId, string userId, map<string|string[]> headers = {}, *PlaceOrderQueries queries) returns xml|error {
+    remote isolated function placeOrder(string baseSiteId, string userId, map<string|string[]> headers = {}, *PlaceOrderQueries queries) returns Order|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orders`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -3510,7 +3510,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getUserOrders(string baseSiteId, string code, string userId, map<string|string[]> headers = {}, *GetUserOrdersQueries queries) returns xml|error {
+    remote isolated function getUserOrders(string baseSiteId, string code, string userId, map<string|string[]> headers = {}, *GetUserOrdersQueries queries) returns Order|xml|error {
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orders/${getEncodedUri(code)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -3582,7 +3582,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - List of invoice of an order 
-    remote isolated function getUserOrderInvoices(string baseSiteId, string code, string userId, map<string|string[]> headers = {}, *GetUserOrderInvoicesQueries queries) returns xml|error {
+    remote isolated function getUserOrderInvoices(string baseSiteId, string code, string userId, map<string|string[]> headers = {}, *GetUserOrderInvoicesQueries queries) returns SAPInvoiceList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orders/${getEncodedUri(code)}/invoices`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -3643,7 +3643,7 @@ public isolated client class Client {
     # + userId - User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getConsignmentTrackingData(string baseSiteId, string consignmentCode, string orderCode, string userId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getConsignmentTrackingData(string baseSiteId, string consignmentCode, string orderCode, string userId, map<string|string[]> headers = {}) returns ConsignmentTracking|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orders/${getEncodedUri(orderCode)}/consignments/${getEncodedUri(consignmentCode)}/tracking`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -3656,7 +3656,7 @@ public isolated client class Client {
     # + userId - User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getConfigurationOverviewForOrderEntry(string baseSiteId, int:Signed32 entryNumber, string orderId, string userId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getConfigurationOverviewForOrderEntry(string baseSiteId, int:Signed32 entryNumber, string orderId, string userId, map<string|string[]> headers = {}) returns CCPConfigurationOverview|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orders/${getEncodedUri(orderId)}/entries/${getEncodedUri(entryNumber)}/ccpconfigurator/configurationOverview`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -3669,7 +3669,7 @@ public isolated client class Client {
     # + orderId - Order identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getTextfieldConfigurationForOrderEntry(string baseSiteId, string userId, int:Signed32 entryNumber, string orderId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getTextfieldConfigurationForOrderEntry(string baseSiteId, string userId, int:Signed32 entryNumber, string orderId, map<string|string[]> headers = {}) returns ConfigurationInfoList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orders/${getEncodedUri(orderId)}/entries/${getEncodedUri(entryNumber)}/configurator/textfield`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -3708,7 +3708,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - Created 
-    remote isolated function createOrgCustomer(string baseSiteId, string userId, OrgCustomerCreation payload, map<string|string[]> headers = {}, *CreateOrgCustomerQueries queries) returns xml|error {
+    remote isolated function createOrgCustomer(string baseSiteId, string userId, OrgCustomerCreation payload, map<string|string[]> headers = {}, *CreateOrgCustomerQueries queries) returns User|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orgCustomers`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -3725,7 +3725,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getOrgCustomer(string baseSiteId, string orgCustomerId, string userId, map<string|string[]> headers = {}, *GetOrgCustomerQueries queries) returns xml|error {
+    remote isolated function getOrgCustomer(string baseSiteId, string orgCustomerId, string userId, map<string|string[]> headers = {}, *GetOrgCustomerQueries queries) returns User|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/orgCustomers/${getEncodedUri(orgCustomerId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -4353,7 +4353,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getPaymentDetailsList(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetPaymentDetailsListQueries queries) returns xml|error {
+    remote isolated function getPaymentDetailsList(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetPaymentDetailsListQueries queries) returns PaymentDetailsList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/paymentdetails`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -4367,7 +4367,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getPaymentDetails(string baseSiteId, string paymentDetailsId, string userId, map<string|string[]> headers = {}, *GetPaymentDetailsQueries queries) returns xml|error {
+    remote isolated function getPaymentDetails(string baseSiteId, string paymentDetailsId, string userId, map<string|string[]> headers = {}, *GetPaymentDetailsQueries queries) returns PaymentDetails|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/paymentdetails/${getEncodedUri(paymentDetailsId)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -4426,7 +4426,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getProductInterests(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetProductInterestsQueries queries) returns xml|error {
+    remote isolated function getProductInterests(string baseSiteId, string userId, map<string|string[]> headers = {}, *GetProductInterestsQueries queries) returns CustomerInterestsSearchPage|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/productinterests`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);
@@ -4439,7 +4439,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function createProductInterest(string baseSiteId, string userId, map<string|string[]> headers = {}, *CreateProductInterestQueries queries) returns xml|error {
+    remote isolated function createProductInterest(string baseSiteId, string userId, map<string|string[]> headers = {}, *CreateProductInterestQueries queries) returns ProductInterestRelation|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/productinterests`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -4621,7 +4621,7 @@ public isolated client class Client {
     # + userId - User identifier or one of the literals : 'current' for currently authenticated user, 'anonymous' for anonymous user
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getConfigurationOverviewForQuote(string baseSiteId, int:Signed32 entryNumber, string quoteId, string userId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getConfigurationOverviewForQuote(string baseSiteId, int:Signed32 entryNumber, string quoteId, string userId, map<string|string[]> headers = {}) returns CCPConfigurationOverview|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/quotes/${getEncodedUri(quoteId)}/entries/${getEncodedUri(entryNumber)}/ccpconfigurator/configurationOverview`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -4634,7 +4634,7 @@ public isolated client class Client {
     # + quoteId - Quote identifier
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getTextfieldConfigurationForQuoteEntry(string baseSiteId, string userId, int:Signed32 entryNumber, string quoteId, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getTextfieldConfigurationForQuoteEntry(string baseSiteId, string userId, int:Signed32 entryNumber, string quoteId, map<string|string[]> headers = {}) returns ConfigurationInfoList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/quotes/${getEncodedUri(quoteId)}/entries/${getEncodedUri(entryNumber)}/configurator/textfield`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -4716,7 +4716,7 @@ public isolated client class Client {
     # + entryNumber - Each entry in a cart has an entry number. Cart entries are numbered in ascending order, starting with zero
     # + headers - Headers to be sent with the request 
     # + return - OK 
-    remote isolated function getTextfieldConfigurationForSavedCartEntry(string baseSiteId, string userId, string cartId, int:Signed32 entryNumber, map<string|string[]> headers = {}) returns xml|error {
+    remote isolated function getTextfieldConfigurationForSavedCartEntry(string baseSiteId, string userId, string cartId, int:Signed32 entryNumber, map<string|string[]> headers = {}) returns ConfigurationInfoList|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/users/${getEncodedUri(userId)}/savedCarts/${getEncodedUri(cartId)}/entries/${getEncodedUri(entryNumber)}/configurator/textfield`;
         return self.clientEp->get(resourcePath, headers);
     }
@@ -4864,7 +4864,7 @@ public isolated client class Client {
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - OK 
-    remote isolated function getVoucherByCode(string baseSiteId, SAPVoucherOperationRequest payload, map<string|string[]> headers = {}, *GetVoucherByCodeQueries queries) returns xml|error {
+    remote isolated function getVoucherByCode(string baseSiteId, SAPVoucherOperationRequest payload, map<string|string[]> headers = {}, *GetVoucherByCodeQueries queries) returns Voucher|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/vouchers/code/search`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         http:Request request = new;
@@ -4883,7 +4883,7 @@ public isolated client class Client {
     #
     # # Deprecated
     @deprecated
-    remote isolated function getVoucher(string baseSiteId, string code, map<string|string[]> headers = {}, *GetVoucherQueries queries) returns xml|error {
+    remote isolated function getVoucher(string baseSiteId, string code, map<string|string[]> headers = {}, *GetVoucherQueries queries) returns Voucher|xml|error{
         string resourcePath = string `/${getEncodedUri(baseSiteId)}/vouchers/${getEncodedUri(code)}`;
         resourcePath = resourcePath + check getPathForQueryParam(queries);
         return self.clientEp->get(resourcePath, headers);

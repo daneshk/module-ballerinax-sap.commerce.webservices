@@ -711,7 +711,7 @@ public type B2BUnitNode record {
 public type OAuth2ClientCredentialsGrantConfig record {|
     *http:OAuth2ClientCredentialsGrantConfig;
     # Token URL
-    string tokenUrl = "http://localhost:9001/occ/v2/authorizationserver/oauth/token";
+    string tokenUrl = "http://localhost:9090/v1/authorizationserver/oauth/token";
 |};
 
 # Account summary of an organizational unit
@@ -1142,7 +1142,7 @@ public type Language record {
 public type OAuth2RefreshTokenGrantConfig record {|
     *http:OAuth2RefreshTokenGrantConfig;
     # Refresh URL
-    string refreshUrl = "http://localhost:9001/occ/v2/authorizationserver/oauth/token";
+    string refreshUrl = "http://localhost:9090/v1/authorizationserver/oauth/token";
 |};
 
 # Representation of a Order Approval List
@@ -5218,4 +5218,1009 @@ public type DoRestorePasswordQueries record {
 public type GetCartEntryQueries record {
     # Response configuration. This is the list of fields that should be returned in the response body. Examples: BASIC,DEFAULT,FULL
     string fields = "DEFAULT";
+};
+
+# List of catalogs
+public type CatalogList record {
+    # List of catalog items
+    Catalog[] catalogs?;
+};
+
+# Representation of a Catalog
+public type Catalog record {
+    # List of versions of catalog
+    CatalogVersion[] catalogVersions?;
+    # Name of abstract catalog item
+    string name?;
+    # Identifier of abstract catalog item
+    string id?;
+    # Date of last modification
+    string lastModified?;
+    # Url address of abstract catalog item
+    string url?;
+};
+
+# Representation of a Category Hierarchy
+public type CategoryHierarchy record {
+    # Name of abstract catalog item
+    string name?;
+    # Identifier of abstract catalog item
+    string id?;
+    # Date of last modification
+    string lastModified?;
+    # List of subcategory hierarchies
+    CategoryHierarchy[] subcategories?;
+    # Url address of abstract catalog item
+    string url?;
+};
+
+# List of countries
+public type CountryList record {
+    # This is the list of Country fields that should be returned in the response body
+    Country[] countries?;
+};
+
+# List of currencies
+public type CurrencyList record {
+    # List of currencies
+    Currency[] currencies?;
+};
+
+# List of languages
+public type LanguageList record {
+    # This is the list of Language fields that should be returned in the response body
+    Language[] languages?;
+};
+
+# List of payment modes
+public type PaymentModeList record {
+    # List of payment modes
+    PaymentMode[] paymentModes?;
+};
+
+# Representation of a Cart
+public type Cart record {
+    # List of applied product promotions
+    PromotionResult[] appliedProductPromotions?;
+    # Email of customer
+    string sapCustomerEmail?;
+    # The payment option identifier
+    string sapPaymentOptionId?;
+    # Representation of a Price
+    Price subTotal?;
+    # Representation of a Price
+    Price totalTax?;
+    # List of applied vouchers
+    Voucher[] appliedVouchers?;
+    # Representation of a Delivery mode
+    DeliveryMode deliveryMode?;
+    # Address object
+    Address deliveryAddress?;
+    # Flag stating if value is net-value
+    boolean net?;
+    # Date of saving cart
+    string saveTime?;
+    # Flag showing if order is calculated
+    boolean calculated?;
+    # Address object
+    Address sapBillingAddress?;
+    # Representation of a Price
+    Price productDiscounts?;
+    # List of applied order promotions
+    PromotionResult[] appliedOrderPromotions?;
+    # List of potential product promotions for cart
+    PromotionResult[] potentialProductPromotions?;
+    # Representation of a Price
+    Price totalPriceWithTax?;
+    # List of order entries
+    OrderEntry[] entries?;
+    # Representation of a Price
+    Price deliveryCost?;
+    # Number of order entries
+    int totalItems?;
+    # Representation of a Price
+    Price totalPrice?;
+    # List of potential order promotions
+    PromotionResult[] potentialOrderPromotions?;
+    # Code of order/cart
+    string code?;
+    # Name of customer
+    string sapCustomerName?;
+    # Payment information
+    PaymentDetails paymentInfo?;
+    # List of pickup order entries
+    OrderEntry[] pickupOrderGroups?;
+    # Representation of a Price
+    Price orderDiscounts?;
+    # Description of cart
+    string description?;
+    # Purchase order number
+    string purchaseOrderNumber?;
+    # Name of cart
+    string name?;
+    # Delivery items quantity
+    int:Signed32 deliveryItemsQuantity?;
+    # Payment type
+    B2BPaymentType paymentType?;
+    # Pickup items quantity
+    int:Signed32 pickupItemsQuantity?;
+    # GUID value of order/cart
+    string guid?;
+    # Total unit count
+    int:Signed32 totalUnitCount?;
+    # Representation of a Principal webservice DTO
+    Principal user?;
+    # Representation of a Price
+    Price totalDiscounts?;
+    # List of delivery order entries
+    OrderEntry[] deliveryOrderGroups?;
+};
+
+# Representation of a Product Search Page
+public type ProductSearchPage record {
+    # Free text search
+    string freeTextSearch?;
+    # Representation of a search results pagination
+    DeprecatedPagination pagination?;
+    # Representation of a Search State
+    SearchState currentQuery?;
+    # Redirect url address keyword
+    string keywordRedirectUrl?;
+    # Representation of a Spell Checker Suggestion
+    SpellingSuggestion spellingSuggestion?;
+    # List of products
+    Product[] products?;
+    # List of facets
+    Facet[] facets?;
+    # List of breadcrumbs
+    Breadcrumb[] breadcrumbs?;
+    # Category code
+    string categoryCode?;
+    # List of sorts
+    Sort[] sorts?;
+};
+
+# List of suggestions
+public type SuggestionList record {
+    # List of suggestions
+    Suggestion[] suggestions?;
+};
+
+# List of promotions
+public type PromotionList record {
+    # List of promotions
+    Promotion[] promotions?;
+};
+
+# Representation of a Store Finder Search Page
+public type StoreFinderSearchPage record {
+    # Source latitude
+    decimal sourceLatitude?;
+    # Source longitude
+    decimal sourceLongitude?;
+    # Representation of a search results pagination
+    DeprecatedPagination pagination?;
+    # Location text
+    string locationText?;
+    # Bound west longitude
+    decimal boundWestLongitude?;
+    # List of stores
+    PointOfService[] stores?;
+    # Bound north latitude
+    decimal boundNorthLatitude?;
+    # Bound east longitude
+    decimal boundEastLongitude?;
+    # Bound south latitude
+    decimal boundSouthLatitude?;
+};
+
+# List of carts
+public type CartList record {
+    # List of carts
+    Cart[] carts?;
+};
+
+# List of delivery modes
+public type DeliveryModeList record {
+    # List of delivery modes
+    DeliveryMode[] deliveryModes?;
+};
+
+# Representation of a Suggestion
+public type Suggestion record {
+    # Suggestion value
+    string value?;
+};
+
+# Representation of a Payment Mode
+public type PaymentMode record {
+    # Logo url of payment mode
+    string pspLogoUrl?;
+    # Payment mode code
+    string code?;
+    # Payment mode name
+    string name?;
+    # Payment mode description
+    string description?;
+};
+
+# Representation of a Catalog Version
+public type CatalogVersion record {
+    # Name of abstract catalog item
+    string name?;
+    # Identifier of abstract catalog item
+    string id?;
+    # Date of last modification
+    string lastModified?;
+    # List of category hierarchies
+    CategoryHierarchy[] categories?;
+    # Url address of abstract catalog item
+    string url?;
+};
+
+# Representation of a Spelling Suggestion
+public type SpellingSuggestion record {
+    # Spelling suggestion
+    string suggestion?;
+    # Query for spelling suggestion
+    string query?;
+};
+
+# Representation of a Breadcrumb
+public type Breadcrumb record {
+    # Value name of the facet
+    string facetValueName?;
+    # Name of the facet
+    string facetName?;
+    # Representation of a Search State
+    SearchState truncateQuery?;
+    # Value code of the facet
+    string facetValueCode?;
+    # Code of the facet
+    string facetCode?;
+};
+
+# Representation of an Invoice List
+public type SAPInvoiceList record {
+    # Pagination information for the SAP invoice list results
+    Pagination pagination?;
+    # list of invoice
+    SAPInvoice[] invoices?;
+    # sorting information
+    Sort1[] sorts?;
+};
+
+# Representation of a Base Store
+public type BaseStore record {
+    # Submit order process code
+    string submitOrderProcessCode?;
+    # List of languages
+    Language[] languages?;
+    # List of delivery countries
+    Country[] deliveryCountries?;
+    # Flag defining is external tax is enabled
+    boolean externalTaxEnabled?;
+    # Available delivery modes for the store
+    DeliveryModeList deliveryModes?;
+    # Default language configuration for the store
+    Language defaultLanguage?;
+    # Payment provider
+    string paymentProvider?;
+    # Maximum radius for searching point of service
+    decimal maxRadiusForPosSearch?;
+    # Default point of service for delivery origin
+    PointOfService defaultDeliveryOrigin?;
+    # Default currency configuration for the store
+    Currency defaultCurrency?;
+    # List of points of service
+    PointOfService[] pointsOfService?;
+    # Base store name
+    string name?;
+    # Create return process code
+    string createReturnProcessCode?;
+    # Flag specifying whether the express checkout option is enabled
+    boolean expressCheckoutEnabled?;
+    # Service order configuration settings for the store
+    ServiceOrderConfiguration serviceOrderConfiguration?;
+    # List of currencies
+    Currency[] currencies?;
+};
+
+# list of city
+public type CityList record {
+    # list of city
+    City[] cities?;
+};
+
+# Site message search result
+public type SiteMessageSearchResult record {
+    # Pagination information for the site message search results
+    Pagination pagination?;
+    # site messages
+    SiteMessage[] messages?;
+    # sorting information
+    Sort1[] sorts?;
+};
+
+# Conversation
+public type Conversation record {
+    # close date
+    string closeDate?;
+    # Agent assigned to handle the conversation
+    Principal agent?;
+    # Most recent message in the conversation
+    ConversationMessage latestMessage?;
+    # conversation identifier
+    string id?;
+    # conversation status
+    string status?;
+    # Customer participating in the conversation
+    Principal customer?;
+    # create date
+    string createDate?;
+};
+
+# Customer coupon for customer
+public type CustomerCoupon2Customer record {
+    # The coupon details in the customer-coupon association
+    CustomerCoupon coupon?;
+    # The customer associated with the coupon
+    User customer?;
+};
+
+# Representation of a Title List
+public type TitleList record {
+    # List of titles
+    Title[] titles?;
+};
+
+# Representation of a Product Reference List
+public type ProductReferenceList record {
+    # List of product references
+    ProductReference[] references?;
+};
+
+# Customer coupon notification
+public type CustomerCouponNotification record {
+    # Customer coupon details included in the notification
+    CustomerCoupon coupon?;
+    # User information for the customer receiving the coupon notification
+    User customer?;
+    # Notification status
+    string status?;
+};
+
+# Representation of a Payment details list
+public type PaymentDetailsList record {
+    # List of payment details
+    PaymentDetails[] payments?;
+};
+
+# Representation of an Address Validation
+public type AddressValidation record {
+    # Decision
+    string decision?;
+    # List of suggested addresses
+    Address[] suggestedAddresses?;
+    # List of validation errors for the address
+    ErrorList errors?;
+};
+
+# Representation of a Product Express Update Element List
+public type ProductExpressUpdateElementList record {
+    # List of product express update element
+    ProductExpressUpdateElement[] productExpressUpdateElements?;
+};
+
+# Representation of a Promotion result list
+public type PromotionResultList record {
+    # List of promotion results
+    PromotionResult[] promotions?;
+};
+
+# Representation of a Store Finder Stock Search Page
+public type StoreFinderStockSearchPage record {
+    # Source latitude
+    decimal sourceLatitude?;
+    # Source longitude
+    decimal sourceLongitude?;
+    # Product information for the stock search query
+    Product product?;
+    # Pagination details for the store finder stock search results
+    DeprecatedPagination pagination?;
+    # Location text
+    string locationText?;
+    # Bound to west longitude
+    decimal boundWestLongitude?;
+    # List of stores
+    PointOfServiceStock[] stores?;
+    # Bound to north latitude
+    decimal boundNorthLatitude?;
+    # List of sorts
+    Sort[] sorts?;
+    # Bound to south latitude
+    decimal boundSouthLatitude?;
+    # Bound to east longitude
+    decimal boundEastLongitude?;
+};
+
+# Representation of a Point of Service List
+public type PointOfServiceList record {
+    # List of points of service
+    PointOfService[] pointOfServices?;
+};
+
+# Representation of a Store Count List
+public type StoreCountList record {
+    # List of store counts
+    StoreCount[] countriesAndRegionsStoreCount?;
+};
+
+# Access data for configuration engine
+public type CPQConfigurationEngineAccess record {
+    # Configuration engine endpoint url
+    string endpoint?;
+    # Configuration engine access token
+    string accessToken?;
+    # Configuration engine access token expiration time in milliseconds since 1970-01-01
+    int accessTokenExpirationTime?;
+};
+
+# Representation of a Cart modification list
+public type CartModificationList record {
+    # List of cart modifications
+    CartModification[] cartModifications?;
+};
+
+# Notification preference list
+public type NotificationPreferenceList record {
+    # notification preferences
+    NotificationPreference[] preferences?;
+};
+
+# Consignment tracking data
+public type ConsignmentTracking record {
+    # Consignment status
+    string statusDisplay?;
+    # The tracking url provided by the carrier
+    string trackingUrl?;
+    # Target arrival date
+    string targetArrivalDate?;
+    # Logistics tracking information
+    ConsignmentTrackingEvent[] trackingEvents?;
+    # Information about the shipping carrier handling the consignment
+    Carrier carrierDetails?;
+    # Tracking identifier
+    string trackingID?;
+};
+
+# Representation of a Review List
+public type ReviewList record {
+    # List of reviews
+    Review[] reviews?;
+};
+
+# Customer coupon search result
+public type CustomerCouponSearchResult record {
+    # Pagination information for customer coupon search results
+    Pagination pagination?;
+    # List of coupon
+    CustomerCoupon[] coupons?;
+    # Sorting information
+    Sort1[] sorts?;
+};
+
+# Representation of a Product List
+public type ProductList record {
+    # Catalog of product list
+    string catalog?;
+    # Total page count
+    int:Signed32 totalPageCount?;
+    # Number of current page
+    int:Signed32 currentPage?;
+    # Version of product list
+    string version?;
+    # List of products
+    Product[] products?;
+    # Total product count
+    int:Signed32 totalProductCount?;
+};
+
+# Representation of an Order Status Update Element List
+public type OrderStatusUpdateElementList record {
+    # List of order status update elements
+    OrderStatusUpdateElement[] orderStatusUpdateElements?;
+};
+
+# Payment request containing URL endpoint and parameters for processing
+public type PaymentRequest record {
+    # Target URL endpoint for submitting the payment request
+    string postUrl?;
+    # Key-value pairs of payment parameters to be submitted
+    map<string> parameters?;
+    # Display labels mapped to payment parameter keys
+    map<string> mappingLabels?;
+};
+
+# List of Regions
+public type RegionList record {
+    # This is the list of Region fields that should be returned in the response body
+    Region[] regions?;
+};
+
+# Representation of a Voucher List
+public type VoucherList record {
+    # List of vouchers
+    Voucher[] vouchers?;
+};
+
+# Product interest relation
+public type ProductInterestRelation record {
+    # List of product interest entry
+    ProductInterestEntry[] productInterestEntry?;
+    # Product associated with the interest relation
+    Product product?;
+};
+
+# Container for a list of B2B payment types
+public type B2BPaymentTypeList record {
+    # Array of available B2B payment types
+    B2BPaymentType[] paymentTypes?;
+};
+
+# list of district
+public type DistrictList record {
+    # list of district
+    District[] districts?;
+};
+
+# Representation of a Card Type List
+public type CardTypeList record {
+    # List of card types
+    CardType[] cardTypes?;
+};
+
+# Represents a commerce system component with metadata and properties
+public type Component record {
+    # Unique identifier for the component
+    string uid?;
+    # Date and time when the component was last modified
+    string modifiedtime?;
+    # Display name of the component
+    string name?;
+    # Additional custom properties for the component
+    map<map<anydata>> otherProperties?;
+    # Unique identifier for the component
+    string uuid?;
+    # Type code identifying the component type
+    string typeCode?;
+};
+
+# Content management system page with template and content configuration
+public type CMSPage record {
+    # Template identifier used for rendering the CMS page
+    string template?;
+    # Unique identifier of the catalog version containing this page
+    string catalogVersionUuid?;
+    # Unique identifier for the CMS page
+    string uid?;
+    # Indicates if this is the default page for its category
+    boolean defaultPage?;
+    # List of content slots associated with the CMS page
+    ContentSlotList contentSlots?;
+    # SEO robot tag instructions for search engine crawlers
+    string robotTag?;
+    # Display name of the CMS page
+    string name?;
+    # Detailed description of the CMS page content
+    string description?;
+    # Additional custom properties for the CMS page
+    map<map<anydata>> otherProperties?;
+    # Display title of the CMS page
+    string title?;
+    # Unique identifier for the CMS page
+    string uuid?;
+    # Type classification code for the CMS page
+    string typeCode?;
+};
+
+# Representation of a Consent Template
+public type ConsentTemplate record {
+    # Current consent status associated with this consent template
+    Consent currentConsent?;
+    # Consent template name
+    string name?;
+    # Consent template description
+    string description?;
+    # Consent template identifier
+    string id?;
+    # Consent template version
+    int:Signed32 version?;
+};
+
+# Container for a collection of order forms
+public type OrderFormList record {
+    # Array of order form objects
+    OrderForm[] orderForms?;
+};
+
+# Representation of a Save Cart Result
+public type SaveCartResult record {
+    # Cart data that was successfully saved
+    Cart savedCartData?;
+};
+
+# Representation of a Base Site List
+public type BaseSiteList record {
+    # List of basesites
+    BaseSite[] baseSites?;
+};
+
+# Representation of a User Group List
+public type UserGroupList record {
+    # List of user groups
+    UserGroup[] userGroups?;
+    # Total number
+    int:Signed32 totalNumber?;
+    # Number of pages
+    int:Signed32 numberOfPages?;
+    # Page size
+    int:Signed32 pageSize?;
+    # Current page
+    int:Signed32 currentPage?;
+};
+
+# Enriches a product configuration with supplementary pricing data
+public type CCPConfigurationPricing record {
+    # Overall pricing summary for the configuration
+    CCPConfigurationOverallPricing priceSummary?;
+    # Indicates that attribute surcharges are displayed relatively to the current attribute price
+    boolean showDeltaPrices?;
+    # Configuration Identifier. A randomly generated UUID owned by the product configurator
+    string configId?;
+    # Indicates that pricing is currently not available
+    boolean pricingError?;
+    # List of supplementary data on attribute level
+    CCPAttributePricing[] attributes?;
+};
+
+# Container for a collection of CMS pages
+public type CMSPageList record {
+    # Array of CMS page objects
+    CMSPage[] page?;
+};
+
+# Representation of a Consent Template List
+public type ConsentTemplateList record {
+    # List of consent templates
+    ConsentTemplate[] consentTemplates?;
+};
+
+# Customer interests search page
+public type CustomerInterestsSearchPage record {
+    # Pagination details for the customer interests search results
+    Pagination pagination?;
+    # List of product interest relation
+    ProductInterestRelation[] results?;
+    # Sorting information
+    Sort1[] sorts?;
+};
+
+# Conversation list
+public type ConversationList record {
+    # conversation data
+    Conversation[] conversations?;
+};
+
+# Container for a list of components
+public type ComponentList record {
+    # Array of component objects
+    Component[] component?;
+};
+
+
+# Dependent types for the missing operations return types
+
+# Representation of a Base Site
+public type BaseSite record {
+    # Indicates if the website supports registration
+    boolean registrationEnabled?;
+    # Default preview catalog id
+    string defaultPreviewCatalogId?;
+    # List of url patterns
+    string[] urlPatterns?;
+    # List of Basestores
+    BaseStore[] stores?;
+    # Channel
+    string channel?;
+    # Indicates whether customer data isolation is enabled for this site. If true, customer can get site information after registration, For example registerd username is name@sap.com, returned uid will be name@sap.com|baseSiteUid
+    boolean 'isolated?;
+    # Locale data for Basesite
+    string locale?;
+    # Unique identifier of Basesite
+    string uid?;
+    # Default preview category code
+    string defaultPreviewCategoryCode?;
+    # Default language configuration for the base site
+    Language defaultLanguage?;
+    # List of url encoding attributes
+    string[] urlEncodingAttributes?;
+    # Name of Basesite
+    string name?;
+    # Theme of Basesite
+    string theme?;
+    # Default preview product code
+    string defaultPreviewProductCode?;
+    # Indicates if the BaseSite requires authentication prior to use it
+    boolean requiresAuthentication?;
+    # CAPTCHA configuration settings for the base site
+    CaptchaConfig captchaConfig?;
+};
+
+# Enriches an attribute with supplementary pricing data
+public type CCPAttributePricing record {
+    # Attribute key
+    string csticUiKey?;
+    # List of currently selected domain values
+    string[] selectedValues?;
+    # List of value price supplements
+    CCPAttributeValuePricing[] priceSupplements?;
+};
+
+# Carrier
+public type Carrier record {
+    # Carrier code
+    string code?;
+    # Carrier name
+    string name?;
+};
+
+# Representation of a Consent
+public type Consent record {
+    # Code of consent
+    string code?;
+    # Date of consenting
+    string consentGivenDate?;
+    # Consent withdrawn date
+    string consentWithdrawnDate?;
+};
+
+# Consignment tracking event
+public type ConsignmentTrackingEvent record {
+    # Consignment location
+    string location?;
+    # Tracking detail
+    string detail?;
+    # Logistics status
+    string referenceCode?;
+    # Date of tracking event
+    string eventDate?;
+};
+
+# Collection of content slots for page layout management
+public type ContentSlotList record {
+    # Array of content slot objects
+    ContentSlot[] contentSlot?;
+};
+
+# Customer coupon
+public type CustomerCoupon record {
+    # End date of the coupon
+    string endDate?;
+    # Indicates if notification is enabled or disabled
+    boolean notificationOn?;
+    # Name of the coupon
+    string name?;
+    # Description of the coupon
+    string description?;
+    # Coupon identifier
+    string couponId?;
+    # Indicates whether the coupon is applicable for all products
+    boolean allProductsApplicable?;
+    # Start date of the coupon
+    string startDate?;
+    # Status of the coupon
+    string status?;
+};
+
+# List of errors
+public type ErrorList record {
+    # Array of error objects containing detailed error information
+    Error[] errors?;
+};
+
+# Notification preference
+public type NotificationPreference record {
+    # if true, the channel is visible; if false, the channel is invisible
+    boolean visible?;
+    # preference channel
+    string channel?;
+    # the corresponding value of current channel, for example, for SMS it should be a mobile number; for email it should be an email address
+    string value?;
+    # if true, the channel is on; if false, the channel is off
+    boolean enabled?;
+};
+
+# Representation of an Order Status Update Element
+public type OrderStatusUpdateElement record {
+    # Code of update element of order status
+    string code?;
+    # BaseSite identifier
+    string baseSiteId?;
+    # Status of update element
+    string status?;
+};
+
+# Representation of a Point Of Service Stock
+public type PointOfServiceStock record {
+    # Physical address of the point of service location
+    Address address?;
+    # Display name of the point of service
+    string displayName?;
+    # Description of the point of service
+    string description?;
+    # Distance to the point of service as text value
+    string formattedDistance?;
+    # Distance to the point of service as number value
+    decimal distanceKm?;
+    # List of warehouse codes associated with the point of service
+    string[] warehouseCodes?;
+    # Geographic coordinates of the point of service location
+    GeoPoint geoPoint?;
+    # Instructions used for picking up an order in store
+    string pickUpInStoreInstructions?;
+    # Url address of the point of service
+    string url?;
+    # Icon image displayed for the point of service on maps
+    Image mapIcon?;
+    # List of features for a given point of service
+    map<anydata> features?;
+    # Collection of images associated with a point of service
+    Image[] storeImages?;
+    # Stock information for the point of service location
+    Stock stockInfo?;
+    # Name of the point of service
+    string name?;
+    # Operating hours schedule for the point of service location
+    OpeningSchedule openingHours?;
+    # Store content of given point of service
+    string storeContent?;
+};
+
+# Representation of a Product Express Update Element
+public type ProductExpressUpdateElement record {
+    # Catalog version
+    string catalogVersion?;
+    # Code of product express update element
+    string code?;
+    # Catalog identifier
+    string catalogId?;
+};
+
+# Product interest entry
+public type ProductInterestEntry record {
+    # Product interest type
+    string interestType?;
+    # Added date of product interest
+    string dateAdded?;
+    # Expiration date of product interest
+    string expirationDate?;
+};
+
+# Representation of an Invoice
+public type SAPInvoice record {
+    # Invoice creation date
+    string createdAt?;
+    # Total invoice amount including all taxes and charges
+    Price totalAmount?;
+    # Net invoice amount before taxes and additional charges
+    Price netAmount?;
+    # External system identifier where the invoice resides
+    string externalSystemId?;
+    # Invoice Id
+    string invoiceId?;
+};
+
+# Configured Service Order
+public type ServiceOrderConfiguration record {
+    # List of Configured Schedule Time
+    string[] serviceScheduleTimes?;
+    # Number of lead days from today required to create service order (ex. 25/09/2020(Today) + 4 - > After considering Lead Days the Date will be 28/09/2020)
+    int:Signed32 leadDays?;
+};
+
+# Site message
+public type SiteMessage record {
+    # message uid
+    string uid?;
+    # sent date
+    string sentDate?;
+    # message subject
+    string subject?;
+    # notification type used for this message
+    string notificationType?;
+    # message body
+    string body?;
+};
+
+# Representation of a Store Count
+public type StoreCount record {
+    # List of store counts
+    StoreCount[] storeCountDataList?;
+    # Iso code of store
+    string isoCode?;
+    # Name of store count
+    string name?;
+    # Count
+    int:Signed32 count?;
+    # Type of store count
+    string 'type?;
+};
+
+# Representation of a Title
+public type Title record {
+    # Title code
+    string code?;
+    # Title name
+    string name?;
+};
+
+# Configuration information of captcha
+public type CaptchaConfig record {
+    # The public key used in captcha validation
+    string publicKey?;
+    # Indicates if the captcha is enabled or not
+    boolean enabled?;
+};
+
+# Content slot containing components and metadata for page layout
+public type ContentSlot record {
+    # List of components contained within this content slot
+    ComponentList components?;
+    # Unique identifier for the content slot
+    string slotUuid?;
+    # Current status of the content slot
+    string slotStatus?;
+    # Display name of the content slot
+    string name?;
+    # Indicates whether the content slot is shared across multiple pages
+    boolean slotShared?;
+    # Additional properties and metadata for the content slot
+    map<anydata> otherProperties?;
+    # Identifier for the content slot
+    string slotId?;
+    # Position or placement of the content slot on the page
+    string position?;
+};
+
+# Enriches an attribute value with supplementary pricing data
+public type CCPAttributeValuePricing record {
+    # Previous price value that is no longer current for the attribute
+    Price obsoletePriceValue?;
+    # Value key
+    string attributeValueKey?;
+    # Current price value for the configurable product attribute
+    Price priceValue?;
+};
+
+# Error message
+public type Error record {
+    # Additional classification specific for each error type e.g. 'noStock'
+    string reason?;
+    # Identifier of the related object e.g. '1'
+    string subject?;
+    # Error code
+    string errorCode?;
+    # The language in which the error message is displayed
+    string language?;
+    # The position or sequence number of this error in the error list
+    int:Signed32 position?;
+    # Type of the error e.g. 'LowStockError'
+    string 'type?;
+    # Descriptive, human readable error message
+    string message?;
+    # Type of the object related to the error e.g. 'entry'
+    string subjectType?;
+    # The detailed exception message describing the error
+    string exceptionMessage?;
 };

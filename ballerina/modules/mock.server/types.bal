@@ -953,7 +953,7 @@ public type Principal record {
 public type OAuth2ClientCredentialsGrantConfig record {|
     *http:OAuth2ClientCredentialsGrantConfig;
     # Token URL
-    string tokenUrl = "http://localhost:9001/occ/v2/authorizationserver/oauth/token";
+    string tokenUrl = "http://localhost:9090/v1/authorizationserver/oauth/token";
 |};
 
 public type XmlErrorListBadRequest record {|
@@ -1825,7 +1825,7 @@ public type CardType record {
 public type OAuth2RefreshTokenGrantConfig record {|
     *http:OAuth2RefreshTokenGrantConfig;
     # Refresh URL
-    string refreshUrl = "http://localhost:9001/occ/v2/authorizationserver/oauth/token";
+    string refreshUrl = "http://localhost:9090/v1/authorizationserver/oauth/token";
 |};
 
 # Representation of a Catalog Version
