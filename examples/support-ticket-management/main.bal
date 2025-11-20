@@ -1,5 +1,5 @@
 import ballerina/io;
-import ballerinax/sap.commerce.webservices as sapCommerceClient;
+import ballerinax/sap.commerce.webservices as sapCommerce;
 
 configurable string clientId = "your_client_id";
 configurable string clientSecret = "your_client_secret";
@@ -9,7 +9,7 @@ configurable string userId = "customer@example.com";
 
 public function main() returns error? {
 
-    sapCommerceClient:ConnectionConfig connectionConfig = {
+    sapCommerce:ConnectionConfig connectionConfig = {
         auth: {
             clientId: clientId,
             clientSecret: clientSecret,
@@ -17,17 +17,16 @@ public function main() returns error? {
         }
     };
 
-    sapCommerceClient:Client commerceClient = check new (connectionConfig, serviceUrl);
+    sapCommerce:Client commerceClient = check new (connectionConfig, serviceUrl);
 
     io:println("=== Customer Service Ticket Management Workflow ===");
-    io:println();
 
     io:println("Step 1: Retrieving available ticket categories...");
-    sapCommerceClient:GetTicketCategoriesQueries categoryQueries = {
+    sapCommerce:GetTicketCategoriesQueries categoryQueries = {
         fields: "DEFAULT"
     };
 
-    sapCommerceClient:TicketCategoryList|error categoryResult = commerceClient->getTicketCategories(
+    sapCommerce:TicketCategoryList|error categoryResult = commerceClient->getTicketCategories(
         baseSiteId,
         {},
         categoryQueries
@@ -39,9 +38,9 @@ public function main() returns error? {
     }
 
     io:println("Available ticket categories:");
-    sapCommerceClient:TicketCategory[]? ticketCategories = categoryResult.ticketCategories;
-    if ticketCategories is sapCommerceClient:TicketCategory[] {
-        foreach sapCommerceClient:TicketCategory category in ticketCategories {
+    sapCommerce:TicketCategory[]? ticketCategories = categoryResult.ticketCategories;
+    if ticketCategories is sapCommerce:TicketCategory[] {
+        foreach sapCommerce:TicketCategory category in ticketCategories {
             string categoryId = category.id;
             string categoryName = category.name ?: "N/A";
             io:println("  - ID: " + categoryId + ", Name: " + categoryName);
@@ -50,28 +49,28 @@ public function main() returns error? {
     io:println();
 
     io:println("Step 2: Creating a new support ticket for product complaint...");
-    sapCommerceClient:TicketCategory selectedCategory = {
+    sapCommerce:TicketCategory selectedCategory = {
         id: "COMPLAINT",
         name: "Product Complaint"
     };
 
-    sapCommerceClient:TicketAssociatedObject associatedOrder = {
+    sapCommerce:TicketAssociatedObject associatedOrder = {
         code: "00001234",
         'type: "Order"
     };
 
-    sapCommerceClient:TicketStarter ticketPayload = {
+    sapCommerce:TicketStarter ticketPayload = {
         ticketCategory: selectedCategory,
         associatedTo: associatedOrder,
         subject: "Defective smartphone screen - immediate replacement needed",
         message: "Customer purchased a smartphone last week and the screen started flickering after 3 days of normal use. The device shows vertical lines and is becoming unusable. Customer is requesting immediate replacement under warranty."
     };
 
-    sapCommerceClient:CreateTicketQueries ticketQueries = {
+    sapCommerce:CreateTicketQueries ticketQueries = {
         fields: "DEFAULT"
     };
 
-    sapCommerceClient:Ticket|error ticketResult = commerceClient->createTicket(
+    sapCommerce:Ticket|error ticketResult = commerceClient->createTicket(
         baseSiteId,
         userId,
         ticketPayload,
@@ -97,17 +96,17 @@ public function main() returns error? {
     io:println();
 
     io:println("Step 3: Adding follow-up communication to the ticket...");
-    sapCommerceClient:TicketEvent followUpEvent = {
+    sapCommerce:TicketEvent followUpEvent = {
         message: "Follow-up: Customer has provided photos of the defective screen. The issue appears to be a manufacturing defect. Escalating to technical team for warranty replacement approval. Customer has been informed about the 24-48 hour processing time.",
         addedByAgent: true,
         author: "support.agent@company.com"
     };
 
-    sapCommerceClient:CreateTicketEventQueries eventQueries = {
+    sapCommerce:CreateTicketEventQueries eventQueries = {
         fields: "DEFAULT"
     };
 
-    sapCommerceClient:TicketEvent|error eventResult = commerceClient->createTicketEvent(
+    sapCommerce:TicketEvent|error eventResult = commerceClient->createTicketEvent(
         baseSiteId,
         ticketId,
         userId,
@@ -128,12 +127,11 @@ public function main() returns error? {
     string eventCreatedAt = eventResult.createdAt ?: "N/A";
 
     io:println("Follow-up event added successfully!");
-    io:println("  - Event Code: " + eventCode);
-    io:println("  - Author: " + eventAuthor);
-    io:println("  - Message: " + eventMessage);
-    io:println("  - Added by Agent: " + eventAddedByAgent.toString());
-    io:println("  - Created At: " + eventCreatedAt);
-    io:println();
+    io:println(string `- Event Code: ${eventCode}`);
+    io:println(string `  - Author: ${eventAuthor}`);
+    io:println(string `  - Message: ${eventMessage}`);
+    io:println(string `  - Added by Agent: ${eventAddedByAgent.toString()}`);
+    io:println(string `  - Created At: ${eventCreatedAt}`);
 
     io:println("=== Customer Service Workflow Completed Successfully ===");
     io:println("The complete ticket management flow has been demonstrated:");
