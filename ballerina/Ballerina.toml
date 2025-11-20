@@ -6,7 +6,7 @@ version = "0.9.0"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
 keywords = ["category/connector", "vendor/sap", "domain/commerce", "area/integration", "protocol/rest"]
-# icon = "icon.png" # TODO: Add icon
+icon = "icon.png"
 repository = "https://github.com/ballerina-platform/module-ballerinax-sap.commerce.webservices"
 
 [build-options]
