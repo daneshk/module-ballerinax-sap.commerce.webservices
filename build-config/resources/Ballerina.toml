@@ -5,7 +5,7 @@ name = "sap.commerce.webservices"
 version = "@toml.version@"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
-keywords = [] # TODO: Add keywords
+keywords = ["category/connector", "vendor/sap", "domain/commerce", "area/integration", "protocol/rest"]
 # icon = "icon.png" # TODO: Add icon
 repository = "https://github.com/ballerina-platform/module-ballerinax-sap.commerce.webservices"
 
