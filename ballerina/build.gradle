@@ -22,7 +22,7 @@ plugins {
     id 'io.ballerina.plugin'
 }
 
-description = 'Sap.commerce.webservices - Ballerina'
+description = 'sap.commerce.webservices - Ballerina'
 
 def packageName = "sap.commerce.webservices"
 def packageOrg = "ballerinax"
