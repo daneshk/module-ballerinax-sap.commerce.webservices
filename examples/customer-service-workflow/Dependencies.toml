@@ -333,7 +333,7 @@ modules = [
 
 [[package]]
 org = "wso2"
-name = "procurement_cost_center_setup"
+name = "customer_service_workflow"
 version = "0.1.0"
 dependencies = [
 	{org = "ballerina", name = "io"},
@@ -341,6 +341,6 @@ dependencies = [
 	{org = "ballerinax", name = "sap.commerce.webservices"}
 ]
 modules = [
-	{org = "wso2", packageName = "procurement_cost_center_setup", moduleName = "procurement_cost_center_setup"}
+	{org = "wso2", packageName = "customer_service_workflow", moduleName = "customer_service_workflow"}
 ]
 

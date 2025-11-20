@@ -30,8 +30,10 @@ plugins {
 rootProject.name = 'module-ballerinax-sap.commerce.webservices'
 
 include ':sap.commerce.webservices-ballerina'
+include ':sap.commerce.webservices-examples'
 
 project(':sap.commerce.webservices-ballerina').projectDir = file("ballerina")
+project(':sap.commerce.webservices-examples').projectDir = file("examples")
 
 gradleEnterprise {
     buildScan {

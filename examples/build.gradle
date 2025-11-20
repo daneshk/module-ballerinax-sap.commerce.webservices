@@ -45,13 +45,6 @@ task testExamples {
 }
 
 task buildExamples {
-    gradle.taskGraph.whenReady { graph ->
-        if (graph.hasTask(":sap.commerce.webservices-examples:test")) {
-            buildExamples.enabled = false
-        } else {
-            testExamples.enabled = false
-        }
-    }
     doLast {
         try {
             exec {
@@ -70,9 +63,13 @@ task buildExamples {
     }
 }
 
-buildExamples.dependsOn ":sap.commerce.webservices-ballerina:build"
-testExamples.dependsOn ":sap.commerce.webservices-ballerina:build"
+// Examples need the package published to local central before they can build
+buildExamples.dependsOn ":sap.commerce.webservices-ballerina:publishToLocalCentral"
+testExamples.dependsOn ":sap.commerce.webservices-ballerina:publishToLocalCentral"
 
-// TODO: Enable the examples build once https://github.com/ballerina-platform/ballerina-library/issues/6135 is fixed
-// test.dependsOn testExamples
-// build.dependsOn buildExamples
+// Enable examples build - it will fail the build if examples fail to compile
+// Only compile examples during build, don't run them (testExamples runs the examples)
+build.dependsOn buildExamples
+check.dependsOn buildExamples
+// Disable test task to prevent testExamples from running during normal build
+test.enabled = false

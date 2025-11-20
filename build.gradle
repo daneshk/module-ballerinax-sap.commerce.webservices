@@ -59,6 +59,7 @@ def moduleVersion = project.version.replace("-SNAPSHOT", "")
 
 task build {
     dependsOn(':sap.commerce.webservices-ballerina:build')
+    dependsOn(':sap.commerce.webservices-examples:build')
 }
 
 release {

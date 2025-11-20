@@ -47,7 +47,7 @@ def stripBallerinaExtensionVersion(String extVersion) {
 ballerina {
     packageOrganization = packageOrg
     module = packageName
-    testCoverageParam = "--code-coverage --coverage-format=xml --groups mock_tests"
+    testCoverageParam = "--groups mock_tests"
     isConnector = true
     platform = "any"
 }
@@ -115,3 +115,33 @@ build.dependsOn test
 build.dependsOn "generatePomFileForMavenPublication"
 publishToMavenLocal.dependsOn build
 publish.dependsOn build
+
+// Task to publish Ballerina package to local central repository
+task publishToLocalCentral {
+    dependsOn build
+    doLast {
+        // Pack the Ballerina package
+        println "Packing Ballerina package..."
+        project.exec {
+            workingDir projectDir
+            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                commandLine 'cmd', '/c', 'bal pack'
+            } else {
+                commandLine 'sh', '-c', 'bal pack'
+            }
+        }
+
+        // Push to local repository (automatically copies to local central)
+        println "Pushing to local Ballerina central repository..."
+        project.exec {
+            workingDir projectDir
+            if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+                commandLine 'cmd', '/c', 'bal push --repository=local'
+            } else {
+                commandLine 'sh', '-c', 'bal push --repository=local'
+            }
+        }
+
+        println "Successfully published to local Ballerina central repository"
+    }
+}
